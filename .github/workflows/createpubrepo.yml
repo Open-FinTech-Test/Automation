@@ -17,5 +17,5 @@ jobs:
       - name: Create Public Repository
         run: |
           gh auth login --with-token <<< ${{ secrets.ORG_ADMIN_TOKEN }}
-          gh repo create ${{ github.event.inputs.org-name }}/${{ github.event.inputs.repo-name }} \
+          gh repo create ${{ secrets.ORGANIZATION }}/${{ github.event.inputs.repo-name }} \
           --public
