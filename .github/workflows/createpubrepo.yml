@@ -22,3 +22,25 @@ jobs:
             -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/orgs/${{ secrets.ORGANIZATION }}/repos \
             -d '{"name": "${{ github.event.inputs.repo-name }}", "private": false}'
+            
+            
+      - name: Update branch protections
+        env:
+           REVIEWER_COUNT: 2
+        run: |
+          curl --location --request PUT 'https://api.github.com/repos/${{ secrets.ORGANIZATION }}/${{ github.event.inputs.repo-name }}/branches/main/protection' \
+          --header 'Accept: application/vnd.github.luke-cage-preview+json' \
+          --header 'Authorization: token ${{ secrets.ORG_ADMIN_TOKEN }}' \
+          --header 'Content-Type: application/json' \
+          --data-raw '{
+          "required_status_checks": null, 
+          "enforce_admins": false, 
+          "required_pull_request_reviews": 
+          {
+            "dismiss_stale_reviews": false,
+            "require_code_owner_reviews": false,
+            "required_approving_review_count": ${{env.REVIEWER_COUNT}}
+          }, 
+          "restrictions": null
+          }'
+
