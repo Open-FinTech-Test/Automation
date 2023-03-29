@@ -24,7 +24,7 @@ jobs:
         env:
           REVIEWER_COUNT: 2
         run: |
-          curl --location --request PUT 'https://api.github.com/repos/${{ secrets.ORGANIZATION }}/${{ github.event.inputs.repo-name }}/branches/main/protection' \
+          curl --location --request PUT 'https://api.github.com/repos/$ORG_NAME/$REPO_NAME/branches/main/protection' \
           --header 'Accept: application/vnd.github.luke-cage-preview+json' \
           --header 'Authorization: token ${{ secrets.ORG_ADMIN_TOKEN }}' \
           --header 'Content-Type: application/json' \
