@@ -30,7 +30,7 @@ jobs:
           --header 'Content-Type: application/json' \
           --data-raw '{
           "required_status_checks": null, 
-          "enforce_admins": false, 
+          "enforce_admins": true, 
           "required_pull_request_reviews": 
           {
             "dismiss_stale_reviews": false,
