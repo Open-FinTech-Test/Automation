@@ -22,7 +22,7 @@ jobs:
             -d '{"name":"'$REPO_NAME'", "private": false, "auto_init": true, "description": "This is my new repository"}'
       - name: Update branch protections
         env:
-          REVIEWER_COUNT: 2
+          REVIEWER_COUNT: 3
         run: |
           curl --location --request PUT 'https://api.github.com/repos/$ORG_NAME/$REPO_NAME/branches/main/protection' \
           --header 'Accept: application/vnd.github.luke-cage-preview+json' \
