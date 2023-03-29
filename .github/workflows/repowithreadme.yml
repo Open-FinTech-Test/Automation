@@ -1,0 +1,33 @@
+name: Create New Repository
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo-name:
+        description: 'Repository Name'
+        required: true
+
+jobs:
+  create-repo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Repository
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const repoName = ${{ github.event.inputs.repo-name }};
+            const repoDescription = 'This is my new repository';
+            const orgName = ${{ secrets.ORGANIZATION }};
+            const octokit = require('@octokit/rest')();
+            octokit.authenticate({
+              type: 'token',
+              token: ${{ secrets.ORG_ADMIN_TOKEN }}
+            });
+            const response = await octokit.repos.createInOrg({
+              org: orgName,
+              name: repoName,
+              description: repoDescription,
+              private: false,
+              auto_init: true
+            });
+            console.log(response);
