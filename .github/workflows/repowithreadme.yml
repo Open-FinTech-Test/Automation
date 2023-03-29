@@ -20,22 +20,22 @@ jobs:
             -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/orgs/$ORG_NAME/repos \
             -d '{"name":"'$REPO_NAME'", "private": false, "auto_init": true, "description": "This is my new repository"}'
-#       - name: Update branch protections
-#         env:
-#           REVIEWER_COUNT: 3
-#         run: |
-#           curl --location --request PUT 'https://api.github.com/repos/$ORG_NAME/$REPO_NAME/branches/main/protection' \
-#           --header 'Accept: application/vnd.github.luke-cage-preview+json' \
-#           --header 'Authorization: token ${{ secrets.ORG_ADMIN_TOKEN }}' \
-#           --header 'Content-Type: application/json' \
-#           --data-raw '{
-#           "required_status_checks": null, 
-#           "enforce_admins": false, 
-#           "required_pull_request_reviews": 
-#           {
-#             "dismiss_stale_reviews": false,
-#             "require_code_owner_reviews": false,
-#             "required_approving_review_count": ${{env.REVIEWER_COUNT}}
-#           }, 
-#           "restrictions": null
-#           }'
+      - name: Update branch protections
+        env:
+          REVIEWER_COUNT: 3
+        run: |
+          curl --location --request PUT 'https://api.github.com/repos/$ORG_NAME/$REPO_NAME/branches/main/protection' \
+          --header 'Accept: application/vnd.github.luke-cage-preview+json' \
+          --header 'Authorization: token ${{ secrets.ORG_ADMIN_TOKEN }}' \
+          --header 'Content-Type: application/json' \
+          --data-raw '{
+          "required_status_checks": null, 
+          "enforce_admins": true, 
+          "required_pull_request_reviews": 
+          {
+            "dismiss_stale_reviews": true,
+            "require_code_owner_reviews": true,
+            "required_approving_review_count": ${{env.REVIEWER_COUNT}}
+          }, 
+          "restrictions": null
+          }'
