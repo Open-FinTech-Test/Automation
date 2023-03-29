@@ -1,4 +1,4 @@
-name: Create New Repository
+name: Create Repo With Readme
 
 on:
   workflow_dispatch:
@@ -12,22 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Create Repository
-        uses: actions/github-script@v4
-        with:
-          script: |
-            const repoName = ${{ github.event.inputs.repo-name }};
-            const repoDescription = 'This is my new repository';
-            const orgName = ${{ secrets.ORGANIZATION }};
-            const octokit = require('@octokit/rest')();
-            octokit.authenticate({
-              type: 'token',
-              token: ${{ secrets.ORG_ADMIN_TOKEN }}
-            });
-            const response = await octokit.repos.createInOrg({
-              org: orgName,
-              name: repoName,
-              description: repoDescription,
-              private: false,
-              auto_init: true
-            });
-            console.log(response);
+        run: |
+          REPO_NAME="${{ github.event.inputs.repo-name }}"
+          ORG_NAME="${{ secrets.ORGANIZATION }}"
+          curl -X POST \
+            -H "Authorization: token ${{ secrets.ORG_ADMIN_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/orgs/$ORG_NAME/repos \
+            -d '{"name":"'$REPO_NAME'", "private": false, "auto_init": true, "description": "This is my new repository"}'
