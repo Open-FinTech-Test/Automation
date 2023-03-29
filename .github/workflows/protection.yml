@@ -10,9 +10,6 @@ on:
 jobs:
   branch-protection:
     runs-on: ubuntu-latest
-    env:
-      REPO_NAME: ${{ github.event.inputs.repo_name }}
-
     steps:
       - name: Set branch protection
         run: |
@@ -40,4 +37,4 @@ jobs:
               "allow_force_pushes": false,
               "allow_deletions": false
             }' \
-            "https://api.github.com/repos/${{ secrets.ORGANIZATION }}/${{ env.REPO_NAME }}/branches/main/protection"
+            "https://api.github.com/repos/${{ secrets.ORGANIZATION }}/${{ github.event.inputs.repo_name }}/branches/main/protection"
