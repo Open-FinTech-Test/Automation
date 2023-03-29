@@ -1,0 +1,16 @@
+name: Assign Users to Repository
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  assign_users:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Assign Users to Repository
+      uses: peter-evans/repository-dispatch@v1
+      with:
+        repository: Open-FinTech-Test/jokuttan
+        event-type: assign_users
+        client-payload: '{"users": ["sruthisagar", "ALJOEKURIAKOSE", "kuriakosemymy"]}'
