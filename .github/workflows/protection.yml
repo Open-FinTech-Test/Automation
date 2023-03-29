@@ -1,0 +1,31 @@
+name: Protection
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo-name:
+        description: 'Repository Name'
+        required: true
+
+jobs:
+  branch-protection:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set branch protection
+        uses: peter-evans/create-or-update-branch-protection@v2
+        with:
+          github-token: ${{ secrets.ORG_ADMIN_TOKEN }}
+          repo: ${{ secrets.ORGANIZATION }}/${{ github.event.inputs.repo-name }}
+          branch: main
+          enforce_admins: true
+          required_pull_request_reviews_approvals: 2
+          required_pull_request_review_teams: ""
+          required_pull_request_review_from_forks: true
+          dismiss_stale_reviews: true
+          require_code_owner_reviews: true
+          allow_force_pushes: false
+          allow_deletions: false
