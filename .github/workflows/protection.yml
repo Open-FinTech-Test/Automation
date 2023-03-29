@@ -1,9 +1,11 @@
 name: Protection
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      repo-name:
+        description: 'Repository Name'
+        required: true
 
 jobs:
   branch-protection:
