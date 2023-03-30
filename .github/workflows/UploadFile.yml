@@ -20,12 +20,15 @@ jobs:
 
       - name: Assign users to repository
         run: |
-          while IFS=',' read -r USERNAME ROLE; do
-            curl -H "Authorization: token ${{ secrets.ORG_ADMIN_TOKEN }}" \
-                 -H "Accept: application/vnd.github.v3+json" \
-                 -X PUT \
-                 -d '{"permission":"'$ROLE'"}' \
-                 "https://api.github.com/repos/${{ env.ORG_NAME }}/${{ env.REPO_NAME }}/collaborators/$USERNAME"
+          while IFS=',' read -r USERNAME ROLE || [ -n "$USERNAME" ]; do
+           if [ -z "$ROLE" ]; then
+             ROLE="write"
+           fi
+          curl -H "Authorization: token ${{ secrets.ORG_ADMIN_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            -X PUT \
+            -d '{"permission":"'$ROLE'"}' \
+            "https://api.github.com/repos/${{ env.ORG_NAME }}/${{ env.REPO_NAME }}/collaborators/$USERNAME"
           done < user_roles_csv/user_roles.csv
 
       - name: Upload CSV artifact
