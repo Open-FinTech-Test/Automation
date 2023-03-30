@@ -16,13 +16,19 @@ jobs:
     - name: Grant Repository Permissions
       run: |
         # Define the user you want to add permissions for
-        user: kuriakosemymy
+        user=kuriakosemymy
+
+        # Define the organization that owns the repository
+        organization=Open-FinTech-Test
 
         # Define the repository you want to grant permissions to
-        repository: jokuttan
+        repository=jokuttan
 
         # Define the type of permission you want to grant (e.g. push, pull)
-        permission: read
+        permission=read
 
-        # Add the user to the repository's permissions list with the specified permission
-        echo "Granting $user $permission access to $repository"
+        # Define your personal access token
+        token=${{ secrets.ORG_ADMIN_TOKEN }}
+
+        # Make a cURL request to grant the specified permission to the specified user on the specified repository
+        curl -X PUT -H "Authorization: token $token" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/$organization/$repository/collaborators/$user/permission" -d "{\"permission\":\"$permission\"}"
