@@ -20,9 +20,7 @@ jobs:
         repo="${{ github.event.inputs.repo-name }}"
         token="${{ secrets.ORG_ADMIN_TOKEN }}"
         
-        # Get the team ID from the team slug
-        team_slug=${{ github.event.inputs.team-slug }}
-        team_id=$(curl -s -H "Authorization: token $token" "https://api.github.com/orgs/$org/teams/$team_slug" | jq -r '.id')
+#        team_slug=${{ github.event.inputs.team-slug }}
+#        team_id=$(curl -s -H "Authorization: token $token" "https://api.github.com/orgs/$org/teams/$team_slug" | jq -r '.id')
         
-        # Assign the team to the repository
-        curl -X PUT -H "Authorization: token $token" "https://api.github.com/orgs/$org/teams/$team_id/repos/$org/$repo"
+        curl -X PUT -H "Authorization: token $token" "https://api.github.com/orgs/$org/teams/$team_slug/repos/$org/$repo"
