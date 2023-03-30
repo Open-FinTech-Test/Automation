@@ -28,4 +28,4 @@ jobs:
         
 
         # Make a cURL request to remove all permission to the specified user and delete him/her from the specified repository
-        curl -i -H "Authorization: token ${{ secrets.ORG_ADMIN_TOKEN }}" -X DELETE -H https://api.github.com/repos/${{ env.ORG_NAME }}/${{ env.REPO_NAME }}/collaborators/${{ env.USER_NAME }}
+        curl -i -H "Authorization: token ${{ secrets.ORG_ADMIN_TOKEN }}" -X DELETE https://api.github.com/repos/${{ env.ORG_NAME }}/${{ env.REPO_NAME }}/collaborators/${{ env.USER_NAME }}
