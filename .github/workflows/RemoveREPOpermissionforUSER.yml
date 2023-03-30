@@ -8,9 +8,6 @@ on:
         required: true
     user-name:
         description: 'User name'
-        required: true
-    permission:
-        description: 'permission to be added'
         required: true  
         
 env:
