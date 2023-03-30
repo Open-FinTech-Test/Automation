@@ -1,6 +1,30 @@
-steps:
-  - name: Upload CSV artifact
-    uses: actions/upload-artifact@v2
-    with:
-      name: user-roles-csv
-      path: user_roles_csv/user_roles.csv
+name: Assign Users to Repo
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  assign-users:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Assign users to repository
+        run: |
+          while IFS=',' read -r USERNAME ROLE; do
+            curl -H "Authorization: token ${{ secrets.ORG_ADMIN_TOKEN }}" \
+                 -H "Accept: application/vnd.github.v3+json" \
+                 -X PUT \
+                 -d '{"permission":"'$ROLE'"}' \
+                 "https://api.github.com/repos/org/repo/collaborators/$USERNAME"
+          done < user_roles_csv/user_roles.csv
+
+      - name: Upload CSV artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: user-roles-csv
+          path: user_roles_csv/user_roles.csv
