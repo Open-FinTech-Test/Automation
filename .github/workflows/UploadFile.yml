@@ -1,4 +1,4 @@
-name: Assign Users to Repo
+name: Assign Users Roles Repo
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
                  -H "Accept: application/vnd.github.v3+json" \
                  -X PUT \
                  -d '{"permission":"'$ROLE'"}' \
-                 "https://api.github.com/repos/org/repo/collaborators/$USERNAME"
+                 "https://api.github.com/repos/Open-FinTech-Test/jokuttan/collaborators/$USERNAME"
           done < user_roles_csv/user_roles.csv
 
       - name: Upload CSV artifact
