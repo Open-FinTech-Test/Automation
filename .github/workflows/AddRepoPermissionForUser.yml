@@ -2,6 +2,22 @@ name: Grant Repo Permissions on Push
 
 on:
   workflow_dispatch:
+   inputs:
+    repo-name:
+        description: 'Repository Name'
+        required: true
+    user-name:
+        description: 'User name'
+        required: true
+    permission:
+        description: 'permission to be added'
+        required: true  
+        
+env:
+  REPO_NAME: "${{ github.event.inputs.repo-name }}"       
+  USER_NAME: "${{ github.event.inputs.user-name }}"
+  PERMISSION: "${{ github.event.inputs.permission }}"
+  ORG_NAME: "${{ secrets.ORGANIZATION }}"
 
 jobs:
   grant-permissions:
@@ -13,20 +29,7 @@ jobs:
 
     - name: Grant Repository Permissions
       run: |
-        # Define the user you want to add permissions for
-        user=kuriakosemymy
-
-        # Define the organization that owns the repository
-        organization=Open-FinTech-Test
-
-        # Define the repository you want to grant permissions to
-        repository=jokuttan
-
-        # Define the type of permission you want to grant (e.g. push, pull)
-        permission=read
-
-        # Define your personal access token
-        token=${{ secrets.ORG_ADMIN_TOKEN }}
+        
 
         # Make a cURL request to grant the specified permission to the specified user on the specified repository
-        curl -X PUT -H "Authorization: token $token" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/$organization/$repository/collaborators/$user/permission" -d "{\"permission\":\"$permission\"}"
+        curl -i -H "Authorization: token ${{ secrets.ORG_ADMIN_TOKEN }}" -X PUT -H "Content-Type: application/json" -d '{"permission": "${{ env.PERMISSION }}"}' https://api.github.com/repos/${{ env.ORG_NAME }}/${{ env.REPO_NAME }}/collaborators/${{ env.USER_NAME }}
