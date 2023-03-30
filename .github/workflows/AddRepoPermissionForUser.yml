@@ -1,0 +1,28 @@
+name: Grant Repo Permissions on Push
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  grant-permissions:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Grant Repository Permissions
+      run: |
+        # Define the user you want to add permissions for
+        user: kuriakosemymy
+
+        # Define the repository you want to grant permissions to
+        repository: jokuttan
+
+        # Define the type of permission you want to grant (e.g. push, pull)
+        permission: read
+
+        # Add the user to the repository's permissions list with the specified permission
+        echo "Granting $user $permission access to $repository"
