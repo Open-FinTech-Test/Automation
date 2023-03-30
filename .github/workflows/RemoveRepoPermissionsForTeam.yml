@@ -1,0 +1,28 @@
+name: Remove Repo Permissions For Team
+
+on:
+  workflow_dispatch:
+   inputs:
+    repo-name:
+        description: 'Repository Name'
+        required: true
+    team-slug:
+        description: 'Team slug'
+        required: true
+        
+env:
+  REPO_NAME: "${{ github.event.inputs.repo-name }}"       
+  TEAM_SLUG: "${{ github.event.inputs.team-slug }}"
+  ORG_NAME: "${{ secrets.ORGANIZATION }}"
+
+jobs:
+  remove-permissions:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Grant Repository Permissions
+      run: |
+        curl -i -H "Authorization: token ${{ secrets.ORG_ADMIN_TOKEN }}" -X DELETE -H "Content-Type: application/json" https://api.github.com/orgs/${{ env.ORG_NAME }}/teams/${{ env.TEAM_SLUG }}/repos/${{ env.ORG_NAME }}/${{ env.REPO_NAME }}
