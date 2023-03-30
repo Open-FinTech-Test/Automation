@@ -1,16 +1,37 @@
-name: Assign Users to Repository
+# name: Assign Users to Repository
+
+# on:
+#   push:
+#     branches: [ main ]
+
+# jobs:
+#   assign_users:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: Assign Users to Repository
+#       uses: peter-evans/repository-dispatch@v1
+#       with:
+#         repository: Open-FinTech-Test/jokuttan
+#         event-type: assign_users
+#         client-payload: '{"users": ["sruthisagar", "ALJOEKURIAKOSE", "kuriakosemymy"]}'
+
+name: Assign Users to Repo
 
 on:
   push:
     branches: [ main ]
 
 jobs:
-  assign_users:
+  assign-users:
     runs-on: ubuntu-latest
+
     steps:
-    - name: Assign Users to Repository
+    - name: Checkout Repo
+      uses: actions/checkout@v2
+
+    - name: Assign Users to Repo
       uses: peter-evans/repository-dispatch@v1
       with:
-        repository: Open-FinTech-Test/jokuttan
-        event-type: assign_users
-        client-payload: '{"users": ["sruthisagar", "ALJOEKURIAKOSE", "kuriakosemymy"]}'
+        token: ${{ secrets.ORG_ADMIN_TOKEN }}
+        event-type: 'assign-users'
+        client-payload: '{"users": ["sruthisagar", "ALJOEKURIAKOSE", "kuriakosemymy"], "repository": "Open-FinTech-Test/jokuttan"}'
