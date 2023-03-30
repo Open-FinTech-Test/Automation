@@ -1,4 +1,4 @@
-name: Grant Repo Permissions FOR USER
+name: Grant Repo Permissions FOR USER dropdown
 
 on:
   workflow_dispatch:
