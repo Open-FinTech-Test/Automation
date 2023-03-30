@@ -3,18 +3,21 @@ name: Grant Repo Permissions FOR USER dropdown
 on:
   workflow_dispatch:
    inputs:
-    repo-name:
+      repo-name:
         description: 'Repository Name'
         required: true
-    user-name:
+      user-name:
         description: 'User name'
         required: true
-    permission:
+      permission:
+        type: choice
         description: 'Select an option'
         required: true
         default: 'push'
-        # Use the `choices` parameter to define dropdown list options
-        options: ['push', 'pull', 'admin']  
+        options: 
+        - push
+        - pull
+        - admin
         
 env:
   REPO_NAME: "${{ github.event.inputs.repo-name }}"       
