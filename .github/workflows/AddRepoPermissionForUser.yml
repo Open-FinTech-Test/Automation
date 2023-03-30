@@ -10,8 +10,14 @@ on:
         description: 'User name'
         required: true
     permission:
-        description: 'permission to be added'
-        required: true  
+        type: choice
+        description: 'Select an option'
+        required: true
+        default: 'push'
+        options: 
+        - push
+        - pull
+        - admin 
         
 env:
   REPO_NAME: "${{ github.event.inputs.repo-name }}"       
