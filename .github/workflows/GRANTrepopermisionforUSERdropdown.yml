@@ -14,7 +14,7 @@ on:
         required: true
         default: 'push'
         # Use the `choices` parameter to define dropdown list options
-        choices: ['push', 'pull', 'admin']  
+        options: ['push', 'pull', 'admin']  
         
 env:
   REPO_NAME: "${{ github.event.inputs.repo-name }}"       
