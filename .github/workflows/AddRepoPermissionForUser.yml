@@ -1,4 +1,4 @@
-name: Grant Repo Permissions on Push
+name: Grant Repo Permissions FOR USER
 
 on:
   workflow_dispatch:
