@@ -29,6 +29,7 @@ jobs:
 
     - name: Grant Repository Permissions
       run: |
-      curl -i -H "Authorization: Bearer ${{ secrets.ORG_ADMIN_TOKEN }}" \
--H "Accept: application/vnd.github.v3+json" \
--X PUT https://api.github.com/orgs/${{ env.ORG_NAME }}/teams/${{ env.TEAM_SLUG }}/repos/${{ env.ORG_NAME }}/${{ env.REPO_NAME }} -d '{"permission":"${{ env.PERMISSION }}"}'
+       curl -i -H "Authorization: Bearer ${{ secrets.ORG_ADMIN_TOKEN }" \
+       -H "Accept: application/vnd.github.v3+json" \
+       -X PUT https://api.github.com/orgs/${{ env.ORG_NAME }}/teams/${{ env.TEAM_SLUG }}/repos/${{ env.ORG_NAME }}/${{ env.REPO_NAME }} -d '{"permission":"admin"}'
+#       curl -i -H "Authorization: Bearer ${{ secrets.ORG_ADMIN_TOKEN }}" -H "Accept: application/vnd.github.v3+json" -X PUT https://api.github.com/orgs/${{ env.ORG_NAME }}/teams/${{ env.TEAM_SLUG }}/repos/${{ env.ORG_NAME }}/${{ env.REPO_NAME }} -d '{"permission":"${{ env.PERMISSION }}"}'
