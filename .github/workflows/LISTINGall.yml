@@ -5,7 +5,7 @@ on:
    inputs:
     repo-name:
         description: 'Repository Name'
-        required: true
+        required: false
     select-choice:
         type: choice
         description: 'Select an option 1.users in repo 2.Teams in REPO. 3.REPOs in ORG'
