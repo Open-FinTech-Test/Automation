@@ -16,7 +16,7 @@ on:
         - team
         - repo
         
- jobs:
+jobs:
   list-details:
     runs-on: ubuntu-latest
 
@@ -30,12 +30,12 @@ on:
             repo="${{ github.event.inputs.repo-name }}"
             token="${{ secrets.ORG_ADMIN_TOKEN }}"
             
-           if [[ ${{ github.event.inputs.select-choice }} == "user" ]]; then
+            if [[ ${{ github.event.inputs.select-choice }} == "user" ]]; then
              curl -H "Authorization: token $token" https://api.github.com/repos/$org/$repo/collaborators 
              
-           elif [[ ${{ github.event.inputs.select-choice }} == "team" ]]; then
+            elif [[ ${{ github.event.inputs.select-choice }} == "team" ]]; then
             curl -H "Authorization: token $token" https://api.github.com/repos/$org/$repo/teams
             
-           else
-           curl -H "Authorization: token $token" https://api.github.com/orgs/$org/repos
-           fi       
+            else
+            curl -H "Authorization: token $token" https://api.github.com/orgs/$org/repos
+            fi       
